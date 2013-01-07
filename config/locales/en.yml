@@ -1,0 +1,18 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  hello: "Hello world"
+  sessions:
+    new:
+      not_registered: "Not yet Registered?"
+      email: "Email"
+      password: "Password"
+      error: "That email and password combination didn't work. :("
+  users:
+    new:
+      name: "Name"
+      email: "Email"
+      password: "Password"
+  buttons:
+    submit: "Submit"

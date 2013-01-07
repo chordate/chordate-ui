@@ -1,0 +1,18 @@
+common: &common
+  adapter: postgresql
+  encoding: unicode
+  username: postgres
+  password:
+  pool: 15
+
+development:
+  <<: *common
+  database: chordate-dev
+
+test:
+  <<: *common
+  database: chordate-test
+
+production:
+  <<: *common
+  database: chordate-prod

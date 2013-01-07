@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chordate</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<script type="text/javascript">
+  currentUser = <%= raw(current_user ? UserDecorator.new(current_user).to_json : {}) %>;
+</script>
+
+<%= yield %>
+
+</body>
+</html>
