@@ -14,7 +14,7 @@ describe Session do
     subject.token.should == user.token
   end
 
-  context "#login" do
+  describe "#login" do
     subject { Session.new(:email => user.email, :password => password) }
 
     def login
@@ -32,7 +32,7 @@ describe Session do
       login.should == true
     end
 
-    context "when given the wrong password" do
+    describe "when given the wrong password" do
       subject { Session.new(:email => user.email, :password => "wrong password") }
 
       it "should not change the token" do
@@ -47,7 +47,7 @@ describe Session do
       end
     end
 
-    context "when given an invalid email" do
+    describe "when given an invalid email" do
       subject { Session.new(:email => "random_#{user.email}") }
 
       it "should return false" do

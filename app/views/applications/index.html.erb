@@ -1,0 +1,29 @@
+<div>
+  <div class='header'>
+    <h2 class='title'>
+      <%= I18n.t("applications.index.title") %>
+    </h2>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Added</th>
+        <th>Last Changed By</th>
+        <th>API Key</th>
+        <th>Detail</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% user.applications.includes(:user).each do |application| %>
+      <tr class='application' id="application_<%= application.id %>">
+        <td><%= link_to application.name, application_path(application) %></td>
+        <td><%= time_ago_in_words(application.created_at) %> ago</td>
+        <td><%= application.user.name %></td>
+        <td><%= application.token %></td>
+        <td><%= link_to I18n.t("applications.index.go_to_app"), application_path(application) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

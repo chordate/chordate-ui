@@ -8,8 +8,8 @@
 </head>
 <body>
 
-<script type="text/javascript">
-  currentUser = <%= raw(current_user ? UserDecorator.new(current_user).to_json : {}) %>;
+<script type='text/javascript'>
+  currentUser = <%= raw(user ? UserDecorator.new(user).to_json : {}) %>;
 </script>
 
 <%= yield %>

@@ -1,6 +1,8 @@
 //= require_self
+//= require_tree ./helpers
 //= require_tree ./models
 //= require_tree ./collections
+//= require ./views/form
 //= require_tree ./views
 
 c = {
@@ -15,6 +17,6 @@ c = {
   },
   data: {},
   template: function(path) {
-    return function(args) { return c.t[path](args); };
+    return function(args) { return !!c.t[path] ? c.t[path](args) : ""; };
   }
 };

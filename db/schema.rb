@@ -9,11 +9,35 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended that you check this file into your version control system.
+# It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20121231155124) do
+ActiveRecord::Schema.define(:version => 20130109003405) do
 
-  create_table "users", force: true do |t|
+  create_table "accounts", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "name"
+  end
+
+  create_table "application_users", :force => true do |t|
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "application_id", :null => false
+    t.integer  "user_id",        :null => false
+  end
+
+  add_index "application_users", ["application_id", "user_id"], :name => "index_application_users_on_application_id_and_user_id", :unique => true
+
+  create_table "applications", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "account_id"
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "token"
+  end
+
+  create_table "users", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
@@ -21,6 +45,7 @@ ActiveRecord::Schema.define(version: 20121231155124) do
     t.string   "password"
     t.integer  "salt"
     t.string   "token"
+    t.integer  "account_id"
   end
 
 end

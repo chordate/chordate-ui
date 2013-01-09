@@ -6,3 +6,5 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+DATA.txt
+TODO.txt

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 shared_examples_for "a decorator" do
-  context "allowed attributes" do
+  describe "allowed attributes" do
     it "allows attributes" do
       decorator_name = subject.class.name.underscore.split('_').map(&:capitalize).join(' ')
 

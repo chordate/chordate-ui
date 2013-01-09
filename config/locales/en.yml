@@ -16,3 +16,10 @@ en:
       password: "Password"
   buttons:
     submit: "Submit"
+    create: "Create"
+  applications:
+    new:
+      name: "Name"
+    index:
+      title: "Applications"
+      go_to_app: "Go to app"

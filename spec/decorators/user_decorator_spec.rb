@@ -2,8 +2,9 @@ require "spec_helper"
 
 describe UserDecorator do
   let(:user) { FactoryGirl.build(:user) }
-  subject { UserDecorator.new(user) }
   let(:allowed) { [:name, :email] }
+
+  subject { UserDecorator.new(user) }
 
   it_behaves_like "a decorator"
 

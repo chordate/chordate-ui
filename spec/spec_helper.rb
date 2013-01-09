@@ -1,15 +1,12 @@
 ENV["RAILS_ENV"] ||= 'test'
 
-require File.expand_path("../../config/environment", __FILE__)
-require 'rspec/rails'
-require 'rspec/autorun'
-require 'rspec/expectations'
-require 'capybara/rspec'
-require 'capybara/poltergeist'
-require 'webmock/rspec'
-require 'selenium/webdriver'
+require_relative "../lib/require"
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+require_all File.expand_path("../../config/environment", __FILE__),
+            'rspec/rails', 'rspec/autorun', 'rspec/expectations', 'capybara/rspec',
+            'capybara/poltergeist', 'webmock/rspec', 'selenium/webdriver'
+
+require_all *Dir[Rails.root.join("spec/support/**/*.rb")]
 
 Rails.logger.info "\n[#{Time.now.utc}] - Logging with level ERROR (4). see #{__FILE__}:#{__LINE__}"
 Rails.logger.level = 4
@@ -20,7 +17,7 @@ end
 
 load Rails.root.join("db", "seeds.rb")
 
-Capybara.javascript_driver = :selenium
+Capybara.javascript_driver = (%w(t true y yes).include?(ENV['POLTERGEIST']) ? :poltergeist : :selenium)
 
 RSpec.configure do |config|
   config.mock_with :rspec
@@ -32,30 +29,15 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.include ControllerHelper, :type => :controller
-
-  config.before(:suite) do
-    #DatabaseCleaner.strategy = :transaction
-    #DatabaseCleaner.clean_with :truncation
-  end
+  config.include RequestHelper, :type => :request
 
   config.before(:each) do
-    #if example.metadata[:js] || example.metadata[:commit]
-    #  DatabaseCleaner.strategy = :truncation
-    #else
-    #  DatabaseCleaner.start
-    #end
-
     WebMock.disable_net_connect!(:allow_localhost => true)
   end
 
   config.after(:each) do
     WebMock.allow_net_connect!
     Timecop.return
-
-    #DatabaseCleaner.clean
-    #if example.metadata[:js] || example.metadata[:commit]
-    #  DatabaseCleaner.strategy = :transaction
-    #end
   end
 end
 

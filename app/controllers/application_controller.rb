@@ -3,11 +3,21 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate!
 
-  def current_user
-    @current_user ||= User.where(:token => cookies.signed[:token]).first
+  def user
+    @user ||= begin
+      User.where(:token => cookies.signed[:token]).first.tap do |user|
+        (params[:user] = user) if user.present?
+      end
+    end
   end
 
-  helper_method :current_user
+  helper_method :user
+
+  def user?
+    user.present?
+  end
+
+  helper_method :user?
 
   def set_cookie
     cookies.signed[:token] = {
@@ -18,10 +28,16 @@ class ApplicationController < ActionController::Base
     true
   end
 
+  def render_error
+    if params[:action] == "create"
+      render :json => {:errors => @item.errors.full_messages}, :status => :unprocessable_entity
+    end
+  end
+
   private
 
   def authenticate!
-    unless current_user.present?
+    unless user?
       redirect_to new_session_path
     end
   end

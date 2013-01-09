@@ -1,9 +1,23 @@
 require "spec_helper"
 
 describe User do
-  subject { FactoryGirl.build(:user) }
+  it { should belong_to(:account) }
+  it { should have_many(:application_users) }
+  it { should have_many(:applications).through(:application_users) }
 
-  context "validations" do
+  describe "validations" do
+    let(:account) { Account.first }
+    subject { FactoryGirl.build(:user) }
+
+    xit "should require an account" do
+      subject.account = nil
+      should_not be_valid
+      should have(1).error_on(:account)
+
+      subject.account = account
+      should be_valid
+    end
+
     it "should require a name" do
       subject.name = nil
       should_not be_valid
@@ -35,7 +49,9 @@ describe User do
   describe "#save" do
     let(:password) { "my password" }
 
-    context "on create" do
+    subject { FactoryGirl.build(:user) }
+
+    describe "on create" do
       it "should assign a token" do
         SecureRandom.stub(:hex).and_return("my secure random")
 
@@ -45,7 +61,7 @@ describe User do
       end
     end
 
-    context "passwords" do
+    describe "passwords" do
       before do
         subject.password = password
       end
@@ -66,8 +82,9 @@ describe User do
     end
   end
 
-  context "#valid_password?" do
+  describe "#valid_password?" do
     let(:password) { "the password" }
+
     subject { FactoryGirl.create(:user, :password => password) }
 
     it "should not be valid (value)" do
@@ -79,7 +96,9 @@ describe User do
     end
   end
 
-  context "#update_token" do
+  describe "#update_token" do
+    subject { FactoryGirl.build(:user) }
+
     before do
       subject.save!
     end

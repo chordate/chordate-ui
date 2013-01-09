@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe ApplicationController do
-  context "#current_user" do
+  describe "#user" do
     let(:user) { User.first }
 
     before do
@@ -9,13 +9,23 @@ describe ApplicationController do
     end
 
     it "should load the user" do
-      controller.current_user.should == user
+      controller.user.should == user
     end
 
     it "should cache the user" do
       User.should_receive(:where).with(:token => user.token).exactly(1).and_return([user])
 
-      3.times { controller.current_user }
+      3.times { controller.user }
+    end
+
+    it "should put the user in the params" do
+      controller.user
+
+      controller.params[:user].should == user
+    end
+
+    it "should have a current user predicate" do
+      controller.should be_user
     end
   end
 

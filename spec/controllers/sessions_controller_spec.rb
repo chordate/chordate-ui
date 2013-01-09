@@ -57,7 +57,7 @@ describe SessionsController do
         it "should render the error" do
           make_request
 
-          JSON.parse(response.body)['errors'].should include(I18n.t("sessions.create.error"))
+          JSON.parse(response.body)['errors'].should include(I18n.t("sessions.new.error"))
         end
 
         it "should not set the cookies" do

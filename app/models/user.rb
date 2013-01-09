@@ -1,7 +1,11 @@
-require "digest/sha2"
-require "securerandom"
+require_all "digest/sha2", "securerandom"
 
 class User < ActiveRecord::Base
+  belongs_to :account
+
+  has_many :application_users
+  has_many :applications, :through => :application_users
+
   validates :name, :email, :password, :presence => true
   validates_uniqueness_of :email
 

@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe UsersController do
   describe "#new" do
-    context ".html" do
+    describe ".html" do
       def make_request
         get :new, :format => "html"
       end
@@ -65,7 +65,7 @@ describe UsersController do
         make_request
       end
 
-      context "when the email has been taken" do
+      describe "when the email has been taken" do
         before do
           @user = User.first.tap {|u| u.update_column(:email, email)}
         end

@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if (decorator = UserDecorator.new(@item)).save
       set_cookie && (render :json => decorator, :status => :created)
     else
-      render :json => {:errors => @item.errors.full_messages}, :status => :unprocessable_entity
+      render_error
     end
   end
 end
