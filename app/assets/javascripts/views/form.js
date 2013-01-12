@@ -3,6 +3,7 @@ c.v.FormView = (function() {
 
   return Backbone.View.extend({
     type: "FormView",
+
     events: function() {
       var events = (this.formEvents || {});
 
@@ -44,7 +45,7 @@ c.v.FormView = (function() {
 
       that.update();
 
-      $.post(that.target, that.model.attributes).
+      $.post(that.target(), that.model.attributes).
         success(function(data) {
           that.undelegateEvents();
 

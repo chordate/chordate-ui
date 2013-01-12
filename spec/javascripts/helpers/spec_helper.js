@@ -3,6 +3,9 @@ jasmine.createEventObj = function() {
 };
 
 beforeEach(function() {
+  c.data = {};
   spyOn(c.u, "navigate");
   jasmine.Ajax.useMock();
+
+  clearAjaxRequests();
 });

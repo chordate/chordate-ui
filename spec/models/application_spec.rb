@@ -3,6 +3,7 @@ require "spec_helper"
 describe Application do
   it { should belong_to(:account) }
   it { should belong_to(:user) }
+  it { should have_many(:events) }
   it { should have_many(:application_users) }
   it { should have_many(:users).through(:application_users) }
 

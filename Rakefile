@@ -9,3 +9,5 @@ ChordateUi::Application.load_tasks
 require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
 load 'jasmine/tasks/jasmine_rails3.rake'
+
+task :default => [:spec, 'jasmine:ci']

@@ -75,8 +75,9 @@ jasmine.JQuery.elementToString = function(element) {
 
     toHaveText: function(text) {
       var trimmedText = $.trim(this.actual.text())
-      if (text && $.isFunction(text.test)) {
-        return text.test(trimmedText)
+
+      if (text && $.isFunction(trimmedText.match)) {
+        return trimmedText.match(text)
       } else {
         return trimmedText == text
       }

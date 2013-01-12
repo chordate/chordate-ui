@@ -1,0 +1,33 @@
+<div>
+  <div>
+    <div>
+      <h2 class='title'>{{title}}</h2>
+    </div>
+    <div>
+      <div class='spinner'></div>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              {{#each headers}}
+                <td>{{this}}</td>
+              {{/each}}
+            </tr>
+          </thead>
+          <tbody>
+            {{#each collection}}
+              {{include ../row}}
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div id="paging">
+        <span class='page selected' data-page='{{page}}'>{{page}}</span>
+        <span class='page' data-page='{{next}}'>{{next}}</span>
+        <span class='page' data-page='{{next}}'>Next</span>
+      </div>
+    </div>
+  </div>
+</div>

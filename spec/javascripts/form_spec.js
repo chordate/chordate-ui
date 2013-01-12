@@ -3,8 +3,12 @@ describe("FormView", function () {
 
   beforeEach(function () {
     view = new c.v.FormView();
-    view.target = "/the_endpoint_to_submit_to";
+    view.target = function() { return "/the_endpoint_to_submit_to" };
     view.fields = ["email"]
+  });
+
+  it("should be a form view", function () {
+    expect(view.type).toEqual("FormView");
   });
 
   it("should have errors", function () {

@@ -10,7 +10,7 @@ describe("UsersNewView", function () {
   });
 
   it("should have a target", function () {
-    expect(view.target).toEqual("/users");
+    expect(view.target()).toEqual("/users");
   });
 
   it("should have fields", function () {

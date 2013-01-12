@@ -1,4 +1,10 @@
 module RequestHelper
+  def visit_and_expect(path)
+    visit path
+
+    expect_path path
+  end
+
   def expect_path(path)
     wait_until(2) { current_path == path }
 

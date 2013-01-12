@@ -7,12 +7,14 @@ gem 'libv8'
 gem 'therubyracer'
 gem 'redis'
 gem 'jquery-rails'
+gem 'i18n-js', :github => 'fnando/i18n-js'
 gem 'capistrano'
+gem 'connection_pool'
 
 group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'jasmine', '1.2.0'
+  gem 'jasmine', :github => "pivotal/jasmine-gem"
 end
 
 group :test do

@@ -3,6 +3,7 @@
 //= require_tree ./models
 //= require_tree ./collections
 //= require ./views/form
+//= require ./views/table
 //= require_tree ./views
 
 c = {

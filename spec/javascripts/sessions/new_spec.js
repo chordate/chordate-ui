@@ -10,7 +10,7 @@ describe("SessionsNewView", function () {
   });
 
   it("should have a target", function () {
-    expect(view.target).toEqual("/sessions");
+    expect(view.target()).toEqual("/sessions");
   });
 
   it("should have fields", function () {

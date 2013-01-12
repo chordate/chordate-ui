@@ -10,7 +10,7 @@ describe("ApplicationsNewView", function () {
   });
 
   it("should have a target", function () {
-    expect(view.target).toEqual("/applications");
+    expect(view.target()).toEqual("/applications");
   });
 
   it("should have fields", function () {

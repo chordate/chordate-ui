@@ -2,7 +2,11 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  date: &date
+    formats:
+      human: "%b %-d, %Y @ %-I:%M:%S %p"
+  time:
+    <<: *date
   sessions:
     new:
       not_registered: "Not yet Registered?"
@@ -23,3 +27,6 @@ en:
     index:
       title: "Applications"
       go_to_app: "Go to app"
+  events:
+    index:
+      title: "Events"

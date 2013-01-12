@@ -6,6 +6,7 @@ class Application < ActiveRecord::Base
   belongs_to :account
   belongs_to :user
 
+  has_many :events
   has_many :application_users
   has_many :users, :through => :application_users
 

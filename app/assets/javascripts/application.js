@@ -6,6 +6,8 @@
 //= require underscore-1.4.3
 //= require backbone-0.9.9
 //= require handlebars
+//= require i18n
+//= require i18n/translations
 //= require chordate
 //= require_tree ./templates
 //= require_tree .
