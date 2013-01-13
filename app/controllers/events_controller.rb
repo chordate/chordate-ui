@@ -13,9 +13,14 @@ class EventsController < ApplicationController
   private
 
   def filtered_events
-    events = @app.events.select('DISTINCT ON (klass) klass, events.*').
-      order('klass, generated_at DESC').limit(30).sort {|x,y| y.generated_at <=> x.generated_at }
-
-    events.collect {|event| EventDecorator.new(event) }
+    Event.recent(@app).sort {|x,y| y.generated_at <=> x.generated_at }.
+      collect {|event| EventDecorator.new(event) }
   end
+end
+
+__END__
+
+def filtered_events # via SQL
+  events = @app.events.select('DISTINCT ON (klass) klass, events.*').
+    order('klass, generated_at DESC').limit(30).sort {|x,y| y.generated_at <=> x.generated_at }
 end

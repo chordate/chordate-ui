@@ -32,6 +32,7 @@ RSpec.configure do |config|
   config.include RequestHelper, :type => :request
 
   config.before(:each) do
+    Hat.redis {|r| r.flushdb }
     WebMock.disable_net_connect!(:allow_localhost => true)
   end
 
@@ -46,7 +47,7 @@ class ActiveRecord::Base
   @@shared_connection = nil
 
   def self.connection
-    @@shared_connection || ConnectionPool::Wrapper.new(:size => 1) { retrieve_connection }
+    @@shared_connection ||= ConnectionPool::Wrapper.new(:size => 1) { retrieve_connection }
   end
 end
 
