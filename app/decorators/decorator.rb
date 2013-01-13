@@ -3,9 +3,11 @@ module Decorator
 
   included do
     class_attribute :_allowed
+    attr_reader :options
 
-    def initialize(item)
+    def initialize(item, options = {})
       @item = item
+      @options = options
     end
 
     define_method :"#{name.gsub(/Decorator/, '').underscore}" do

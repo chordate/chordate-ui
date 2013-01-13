@@ -13,8 +13,9 @@ class EventsController < ApplicationController
   private
 
   def filtered_events
-    Event.recent(@app).sort {|x,y| y.generated_at <=> x.generated_at }.
-      collect {|event| EventDecorator.new(event) }
+    options = params.slice(:env, :page).symbolize_keys
+
+    ApplicationEventsDecorator.new(@app, options)
   end
 end
 

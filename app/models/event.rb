@@ -11,13 +11,4 @@ class Event < ActiveRecord::Base
       r.hset("#{key}:#{env}", klass, value)
     }
   }
-
-  def self.recent(app, env=nil)
-    key = "applications:#{app.id}:events"
-    (key += ":#{env}") unless env.nil?
-
-    Event.find(
-      Hat.redis {|r| r.hvals(key) }.map {|v| v.split(':').last }
-    )
-  end
 end
