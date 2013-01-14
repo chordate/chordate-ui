@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   private
 
   def filtered_events
-    options = params.slice(:env, :page).symbolize_keys
+    options = params.slice(:page, :env, :klass, :model_type, :model_id).symbolize_keys
 
     ApplicationEventsDecorator.new(@app, options)
   end

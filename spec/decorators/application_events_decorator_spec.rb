@@ -50,6 +50,18 @@ describe ApplicationEventsDecorator do
       end
     end
 
+    describe "when given a class" do
+      let(:klass) { "UserClass" }
+
+      before do
+        options[:klass] = klass.tap {|k| @events.last.update_column(:klass, k) }
+      end
+
+      it "should filter to matching events" do
+        subject.to_json.should == [EventDecorator.new(@events.last)].to_json
+      end
+    end
+
     describe "sorting" do
       before do
         @events.push(
@@ -59,6 +71,30 @@ describe ApplicationEventsDecorator do
 
       it "should sort the results by generation time" do
         subject.to_json.should == @events.last(2).reverse.collect {|event| EventDecorator.new(event) }.to_json
+      end
+    end
+
+    describe "when filtering by model type" do
+      let(:model) { "UserModel" }
+
+      before do
+        options[:model_type] = model.tap {|t| @events.first.update_column(:model_type, t) }
+      end
+
+      it "should filter to matching events" do
+        subject.to_json.should == @events.first(1).collect {|event| EventDecorator.new(event) }.to_json
+      end
+
+      describe "when filtering by model id" do
+        before do
+          @events.each {|e| e.update_column(:model_type, model) }
+
+          options[:model_id] = "1123".tap {|i| @events.last.update_column(:model_id, i) }
+        end
+
+        it "should filter to matching events" do
+          subject.to_json.should == @events.last(1).collect {|event| EventDecorator.new(event) }.to_json
+        end
       end
     end
   end

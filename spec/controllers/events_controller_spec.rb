@@ -66,6 +66,42 @@ describe EventsController do
             ].to_json
           end
         end
+
+        describe "when filtering by class" do
+          before do
+            defaults[:klass] = "User".tap {|k| @events.last.update_column(:klass, k) }
+          end
+
+          it "should return the matching events" do
+            make_request
+
+            response.body.should == [EventDecorator.new(@events.last)].to_json
+          end
+        end
+
+        describe "when filtering by model type" do
+          before do
+            defaults[:model_type] = "UserClass".tap {|t| @events.last.update_column(:model_type, t) }
+          end
+
+          it "should return the matching events" do
+            make_request
+
+            response.body.should == [EventDecorator.new(@events.last)].to_json
+          end
+        end
+
+        describe "when filtering by model id" do
+          before do
+            defaults[:model_id] = "1234".tap {|i| @events.first.update_column(:model_id, i) }
+          end
+
+          it "should return the matching events" do
+            make_request
+
+            response.body.should == [EventDecorator.new(@events.first)].to_json
+          end
+        end
       end
 
       describe "when events have the same klass" do
