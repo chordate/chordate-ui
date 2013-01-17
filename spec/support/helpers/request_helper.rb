@@ -22,4 +22,8 @@ module RequestHelper
     expect_path dashboard_path
     visit (options[:to] || dashboard_path)
   end
+
+  def find_by_title(title)
+    page.find('a', :title => title)
+  end
 end

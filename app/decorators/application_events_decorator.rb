@@ -26,7 +26,7 @@ class ApplicationEventsDecorator
   def filter
     @events = @item.events.order("generated_at DESC").limit(30)
 
-    @events = @events.offset(page * 30) if page > 1
+    @events = @events.offset((page - 1) * 30) if page > 1
 
     if (type = @options.fetch(:model_type, false))
       @events = @events.where(:model_type => type.to_s)

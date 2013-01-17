@@ -9,14 +9,24 @@ c.v.EventsIndexView = (function() {
     },
 
     init: function() {
-      var that = this;
+      _.bindAll(this, "fetch");
 
-      $.get(this.target(), {page: 1}).
+      this.collection.on("filter", this.fetch);
+
+      this.fetch();
+    },
+
+    fetch: function() {
+      var that = this,
+          filters = (that.collection.filters || {}),
+          options = _({page: 1}).extend(filters);
+
+      $.get(this.target(), options).
         success(function(data) {
           that.collection.reset(data);
 
-          that.$(".spinner").addClass("hidden");
-        })
+          that.hideSpinner();
+        });
     }
   });
 }());

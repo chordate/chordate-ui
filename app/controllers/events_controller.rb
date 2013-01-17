@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_filter lambda { @app = user.applications.find(params[:application_id]) }
+  before_filter :load_application
 
   def index
     respond_to do |type|
@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   private
 
   def filtered_events
-    options = params.slice(:page, :env, :klass, :model_type, :model_id).symbolize_keys
+    options = params.slice(:page, :env, :klass, :model_type, :model_id)
 
     ApplicationEventsDecorator.new(@app, options)
   end

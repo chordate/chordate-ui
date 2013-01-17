@@ -50,17 +50,21 @@ describe("EventsIndexView", function () {
     });
   });
 
-  describe("#render", function () {
-    var makeEvent = function(id) {
-      return {
-        id: id,
-        generated_at: "2013-01-01T19:" + id + ":00Z",
-        klass: "MyError" + id,
-        message: "An Error Message " + id,
-        env: "env -- " + id
-      }
-    };
+  var makeEvent = function(id) {
+    return {
+      id: id,
+      generated_at: "2013-01-01T19:" + id + ":00Z",
+      klass: "MyError" + id,
+      message: "An Error Message " + id,
+      env: "env -- " + id
+    }
+  };
 
+  var error = function(which) {
+    return view.$("tbody tr:eq(" + which + ")");
+  };
+
+  describe("#render", function () {
     beforeEach(function () {
       view.render();
     });
@@ -70,10 +74,6 @@ describe("EventsIndexView", function () {
     });
 
     describe("when the events are returned", function () {
-      var error = function(which) {
-        return view.$("tbody tr:eq(" + which + ")");
-      };
-
       beforeEach(function () {
         request.response({
           status: 200,
@@ -112,6 +112,38 @@ describe("EventsIndexView", function () {
         expect(error(0)).toHaveText("Jan 1, 2013 @ 11:44:00 AM");
         expect(error(1)).toHaveText("Jan 1, 2013 @ 11:21:00 AM");
       });
+    });
+  });
+
+  describe("when a filter changes", function () {
+    beforeEach(function () {
+      mostRecentAjaxRequest().response({ status: 200, responseText: "[]" });
+
+      view.collection.filters = { key: "random-value" }
+
+      view.collection.trigger("filter");
+
+      request = mostRecentAjaxRequest();
+      request.response({
+        status: 200,
+        responseText: JSON.stringify(makeEvent(889))
+      });
+    });
+
+    it("should have the events", function () {
+      expect(view.$("tbody tr").length).toEqual(1);
+    });
+
+    it("should have the event ids", function () {
+      expect(view.$("#event_889")).toExist();
+    });
+
+    it("should have the error classes", function () {
+      expect(error(0)).toHaveText("MyError889");
+    });
+
+    it("should send the filters", function () {
+      expect(request.url).toMatch(/key=random-value/);
     });
   });
 });

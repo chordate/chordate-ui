@@ -22,10 +22,10 @@ describe EventsController do
     end
 
     describe ".json" do
-      let(:defaults) { {} }
+      let(:options) { {} }
 
       def make_request
-        xhr :get, :index, {:application_id => application.id, :format => "json"}.merge(defaults)
+        xhr :get, :index, {:application_id => application.id, :format => "json"}.merge(options)
       end
 
       it "should be a 200" do
@@ -69,7 +69,7 @@ describe EventsController do
 
         describe "when filtering by class" do
           before do
-            defaults[:klass] = "User".tap {|k| @events.last.update_column(:klass, k) }
+            options[:klass] = "User".tap {|k| @events.last.update_column(:klass, k) }
           end
 
           it "should return the matching events" do
@@ -81,7 +81,7 @@ describe EventsController do
 
         describe "when filtering by model type" do
           before do
-            defaults[:model_type] = "UserClass".tap {|t| @events.last.update_column(:model_type, t) }
+            options[:model_type] = "UserClass".tap {|t| @events.last.update_column(:model_type, t) }
           end
 
           it "should return the matching events" do
@@ -93,7 +93,7 @@ describe EventsController do
 
         describe "when filtering by model id" do
           before do
-            defaults[:model_id] = "1234".tap {|i| @events.first.update_column(:model_id, i) }
+            options[:model_id] = "1234".tap {|i| @events.first.update_column(:model_id, i) }
           end
 
           it "should return the matching events" do

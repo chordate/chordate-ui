@@ -12,6 +12,10 @@ describe("TableView", function () {
     expect(view.type).toEqual("TableView");
   });
 
+  it("should paginate", function () {
+    expect(view.paginate).toEqual(true);
+  });
+
   it("should have a collection", function () {
     expect(view.collection).toBeDefined();
   });
@@ -69,6 +73,8 @@ describe("TableView", function () {
       view.success = function() { success = true; };
       view.error = function() { error = true; };
 
+      view.collection.filters = { key: "random-value" };
+
       view.paging(event);
       request = mostRecentAjaxRequest();
     });
@@ -88,6 +94,10 @@ describe("TableView", function () {
 
     it("should request page 7", function () {
       expect(request.url).toMatch(/page=7/);
+    });
+
+    it("should append any filters", function () {
+      expect(request.url).toMatch(/key=random-value/);
     });
 
     it("should not be successful", function () {

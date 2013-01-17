@@ -3,9 +3,10 @@ c.v.TableView = (function() {
 
   return Backbone.View.extend({
     type: "TableView",
+    paginate: true,
 
     events: function() {
-      var events = (this.formEvents || {});
+      var events = (this.tableEvents || {});
 
       return _({
         'click .page': 'paging'
@@ -24,38 +25,49 @@ c.v.TableView = (function() {
     },
 
     render: function() {
-      var attrs = _(this).pick("title", "headers", "page", "row"),
+      var attrs = _(this).pick("paginate", "title", "headers", "page", "row"),
           context = _({
             collection: this.collection.models,
             next: attrs.page + 1
           }).extend(attrs);
 
       this.$el.html(template(context));
-      this.$(".spinner").addClass("hidden");
 
+      this.afterRender && this.afterRender();
       return this;
     },
 
     paging: function(e) {
       var that = this,
+          filters = (that.collection.filters || {}),
           $page = $(e.currentTarget);
 
       that.page = parseInt($page.data("page"), 10);
 
+      var options = _({page: that.page}).extend(filters);
+
       that.$(".spinner").removeClass("hidden");
 
-      $.get(that.target(), {page: that.page}).
+      $.get(that.target(), options).
         success(function(data) {
           that.success && that.success(data);
 
           that.collection.reset(data);
-          that.$(".spinner").addClass("hidden");
+          that.hideSpinner();
         }).
         error(function() {
           that.error && that.error();
 
-          that.$(".spinner").addClass("hidden");
+          that.hideSpinner();
         });
+    },
+
+    showSpinner: function() {
+      this.$(".spinner").removeClass("hidden");
+    },
+
+    hideSpinner: function() {
+      this.$(".spinner").addClass("hidden");
     }
   })
 }());

@@ -4,6 +4,7 @@ ChordateUi::Application.routes.draw do
 
   resources :applications do
     resources :events, :only => [:index]
+    resources :filters, :only => [:index]
   end
 
   get '/dashboard' => 'dashboards#index'

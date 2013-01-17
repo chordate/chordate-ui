@@ -4,7 +4,7 @@
       <h2 class='title'>{{title}}</h2>
     </div>
     <div>
-      <div class='spinner'></div>
+      <div class='spinner hidden'></div>
       <div>
         <table>
           <thead>
@@ -23,11 +23,13 @@
       </div>
     </div>
     <div>
+      {{#if paginate}}
       <div id="paging">
         <span class='page selected' data-page='{{page}}'>{{page}}</span>
         <span class='page' data-page='{{next}}'>{{next}}</span>
         <span class='page' data-page='{{next}}'>Next</span>
       </div>
+      {{/if }}
     </div>
   </div>
 </div>

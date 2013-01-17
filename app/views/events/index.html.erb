@@ -1,8 +1,22 @@
 <div>
   <div id='events'></div>
 </div>
+<div>
+  <div id='filters'>
+    <div>
+      <div id='filter_klass'></div>
+    </div>
+  </div>
+</div>
 
 <script type='text/javascript'>
-  c.data.application = new Backbone.Model(<%= raw(ApplicationDecorator.new(@app).to_json) %>);
-  (new c.v.EventsIndexView({el: '#events'})).render();
+  $(function() {
+    var indexView, events;
+
+    c.data.application = new Backbone.Model(<%= raw(ApplicationDecorator.new(@app).to_json) %>);
+    (indexView = new c.v.EventsIndexView({el: '#events'})).render();
+
+    events = indexView.collection;
+    (new c.v.EventsFilterKlassView({el: "#filter_klass", eventsCollection: events})).render();
+  });
 </script>

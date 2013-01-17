@@ -7,7 +7,7 @@ module Decorator
 
     def initialize(item, options = {})
       @item = item
-      @options = options
+      @options = options.symbolize_keys
     end
 
     define_method :"#{name.gsub(/Decorator/, '').underscore}" do
