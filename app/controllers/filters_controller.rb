@@ -2,12 +2,16 @@ class FiltersController < ApplicationController
   before_filter :load_application
 
   def index
-    decorator = ApplicationEventsFilterDecorator.new(@app, params.slice(:model, :type))
-
-    if decorator.valid?
-      render :json => decorator
+    if filters.valid?
+      render :json => filters
     else
       head :unprocessable_entity
     end
+  end
+
+  private
+
+  def filters
+    @filters ||= ApplicationEventsFilterDecorator.new(@app, params.slice(:model, :type))
   end
 end

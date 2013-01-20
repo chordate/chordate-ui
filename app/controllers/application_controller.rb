@@ -5,24 +5,20 @@ class ApplicationController < ActionController::Base
 
   def user
     @user ||= begin
-      User.where(:token => cookies.signed[:token]).first.tap do |user|
-        (params[:user] = user) if user.present?
+      User.where(:token => _user_token).first.tap_if(:present?) do |user|
+        params[:user] = user
       end
     end
   end
-
-  helper_method :user
 
   def user?
     user.present?
   end
 
-  helper_method :user?
-
   def set_cookie
     cookies.signed[:token] = {
-        :value => @item.token,
-        :expires => 3.weeks.from_now
+      :value => @item.token,
+      :expires => 3.weeks.from_now
     }
 
     true
@@ -32,13 +28,13 @@ class ApplicationController < ActionController::Base
     @app = user.applications.find(params[:application_id])
   end
 
-  helper_method :load_application
-
   def render_error
     if params[:action] == "create"
       render :json => {:errors => @item.errors.full_messages}, :status => :unprocessable_entity
     end
   end
+
+  helper_method :user, :user?, :load_application
 
   private
 
@@ -46,5 +42,9 @@ class ApplicationController < ActionController::Base
     unless user?
       redirect_to new_session_path
     end
+  end
+
+  def _user_token
+    cookies.signed[:token].presence || params[:token]
   end
 end

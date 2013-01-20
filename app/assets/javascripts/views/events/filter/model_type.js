@@ -1,12 +1,12 @@
-c.v.EventsFilterKlassView = (function() {
+c.v.EventsFilterModelTypeView = (function() {
   return c.v.TableView.extend({
-    title: "Error Class",
+    title: "Offending Model",
     headers: [""],
     paginate: false,
-    row: "_events_filter_klass_row",
+    row: "_events_filter_model_type_row",
 
     target: function() {
-      return "/applications/" + c.data.application.id + "/filters.json?model=event&type=klass"
+      return "/applications/" + c.data.application.id + "/filters.json?model=event&type=model_type"
     },
 
     tableEvents: {
@@ -31,9 +31,9 @@ c.v.EventsFilterKlassView = (function() {
       var $tr = $(e.currentTarget),
           events = this.options.eventsCollection;
 
-      events.filters = { klass: $tr.data("klass") };
+      events.filters = { model_type: $tr.data("model_type") };
 
       events.trigger("filter");
     }
   });
-}());
+}())

@@ -33,7 +33,6 @@ c.v.TableView = (function() {
 
       this.$el.html(template(context));
 
-      this.afterRender && this.afterRender();
       return this;
     },
 

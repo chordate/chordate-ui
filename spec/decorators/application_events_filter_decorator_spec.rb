@@ -33,6 +33,14 @@ describe ApplicationEventsFilterDecorator do
 
           it { should be_valid }
         end
+
+        describe "when given the 'model type' type" do
+          before do
+            options[:type] = "model_type"
+          end
+
+          it { should be_valid }
+        end
       end
 
       describe "when given the klass type" do
@@ -48,9 +56,9 @@ describe ApplicationEventsFilterDecorator do
   describe "#as_json" do
     before do
       @events = [
-        FactoryGirl.create(:event, :klass => "FirstError", :application => application),
-        FactoryGirl.create(:event, :klass => "FirstError", :application => application),
-        FactoryGirl.create(:event, :klass => "LastError", :application => application)
+        FactoryGirl.create(:event, :klass => "FirstError", :model_type => "UserClass", :application => application),
+        FactoryGirl.create(:event, :klass => "FirstError", :model_type => "OtherClass", :application => application),
+        FactoryGirl.create(:event, :klass => "LastError", :model_type => "UserClass", :application => application)
       ]
     end
 
@@ -77,6 +85,30 @@ describe ApplicationEventsFilterDecorator do
             },
             {
               "name" => "LastError",
+              "count" => 1
+            }
+          ]
+        end
+      end
+
+      describe "when given the 'event' model and the 'model_type' type" do
+        before do
+          options.merge!(
+            :model => "event",
+            :type => "model_type"
+          )
+        end
+
+        it { should be_valid }
+
+        it "should return the klasses and counts" do
+          JSON.parse(subject.to_json).should == [
+            {
+              "name" => "UserClass",
+              "count" => 2
+            },
+            {
+              "name" => "OtherClass",
               "count" => 1
             }
           ]

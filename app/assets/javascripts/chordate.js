@@ -6,7 +6,7 @@
 //= require ./views/table
 //= require_tree ./views
 
-c = {
+var c = {
   m: {},
   v: {},
   c: {},

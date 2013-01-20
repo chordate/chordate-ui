@@ -55,7 +55,7 @@ describe("TableView", function () {
 
     it("should have the spinner", function () {
       expect(view.$(".spinner")).toExist();
-      expect(view.$(".spinner")).toHaveClass("hidden");
+      expect(view.$(".spinner")).not.toHaveClass("hidden");
     });
   });
 

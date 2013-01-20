@@ -112,7 +112,7 @@ describe EventsController do
               FactoryGirl.create(:event, :klass => "AnError", :generated_at => 1.minute.ago, :application => application),
             ]
 
-            @other_event = FactoryGirl.create(:event, :application => application, :generated_at => 1.minute.ago)
+            @other_event = FactoryGirl.create(:event, :application => application, :generated_at => 1.1.minutes.ago)
           end
         end
 
