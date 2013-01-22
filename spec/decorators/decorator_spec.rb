@@ -27,7 +27,23 @@ describe Decorator do
         OtherDecorator.new(1_000).other.should == 1_000
       end
     end
+  end
 
+  describe ".many" do
+    let(:items) { 2.times.collect {|i| mock("item", :attributes => {:id => i}) } }
+
+    subject { BaseDecorator.many(items) }
+
+    it "should return an array of decorators" do
+      subject.collect(&:class).uniq.should == [BaseDecorator]
+    end
+
+    it "should be the decorator of the passed items" do
+      subject.to_json.should == [
+        BaseDecorator.new(items.first),
+        BaseDecorator.new(items.last)
+      ].to_json
+    end
   end
 
   describe "#as_json" do

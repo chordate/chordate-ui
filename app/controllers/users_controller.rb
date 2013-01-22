@@ -13,4 +13,8 @@ class UsersController < ApplicationController
       render_error
     end
   end
+
+  def index
+    render :json => UserDecorator.many(application.users.order("application_users.created_at"))
+  end
 end

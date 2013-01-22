@@ -15,6 +15,77 @@ describe UsersController do
     end
   end
 
+  describe "#index" do
+    let(:user) { User.first }
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:application) { Application.first }
+
+    before do
+      sign_in user
+    end
+
+    describe ".json" do
+      let(:options) { {} }
+
+      describe "by application" do
+        def make_request
+          xhr :get, :index, {:format => "json", :application_id => application.id}.merge(options)
+        end
+
+        before do
+          application.users << other_user
+        end
+
+        it "should be successful" do
+          make_request
+
+          response.should be_success
+        end
+
+        it "should return many users" do
+          make_request
+
+          response.body.should == UserDecorator.many([user, other_user]).to_json
+        end
+
+        describe "when there are users for other applications" do
+          let(:ordered_user) { FactoryGirl.create(:user) }
+
+          before do
+            @user = FactoryGirl.create(:user)
+            @application = FactoryGirl.create(:application, :user => @user)
+
+            @application.users << ordered_user
+            @application.users << user
+          end
+
+          it "should scope the users" do
+            make_request
+
+            json = JSON.parse(response.body).collect {|i| i['id']}
+
+            json.should include(user.id)
+            json.should include(other_user.id)
+            json.should_not include(ordered_user.id)
+            json.should_not include(@user.id)
+          end
+
+          describe "when requesting that application" do
+            before do
+              options[:application_id] = @application.id
+            end
+
+            it "should return many users" do
+              make_request
+
+              response.body.should == UserDecorator.many([@user, ordered_user, user]).to_json
+            end
+          end
+        end
+      end
+    end
+  end
+
   describe "#create" do
     let(:name) { "John Doe" }
     let(:email) { "john-doe@example.com" }

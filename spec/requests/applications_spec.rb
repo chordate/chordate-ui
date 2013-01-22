@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "applications", :js => true do
+describe :applications, :js => true do
   let(:user) { User.first }
 
   before do
@@ -33,7 +33,7 @@ describe "applications", :js => true do
     other_app = FactoryGirl.create(:application)
     other_app.users = []
 
-    app  = apps.first
+    app = apps.first
 
     visit applications_path
 
@@ -56,5 +56,31 @@ describe "applications", :js => true do
     end
 
     expect_path application_path(app)
+  end
+
+  it "views application users" do
+    application = Application.first
+
+    other_user = FactoryGirl.create(:user)
+
+    application.users = []
+    application.users << other_user
+    application.users << user
+
+    visit_and_expect application_path(application)
+
+    page.should have_selector("#users .user", :count => 2)
+
+    within "#users" do
+      within "#user_#{user.id}" do
+        page.should have_content(user.name)
+        page.should have_content(user.email)
+      end
+
+      within "#user_#{other_user.id}" do
+        page.should have_content(other_user.name)
+        page.should have_content(other_user.email)
+      end
+    end
   end
 end

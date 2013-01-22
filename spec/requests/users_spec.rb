@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "users" do
+describe :users do
   it "creates a new user", :js => true do
     visit new_session_path
 

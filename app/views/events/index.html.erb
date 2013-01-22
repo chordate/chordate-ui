@@ -13,10 +13,11 @@
 </div>
 
 <script type='text/javascript'>
+  c.data.application = new Backbone.Model(<%= raw(ApplicationDecorator.new(application).to_json) %>);
+
   $(function() {
     var indexView, events;
 
-    c.data.application = new Backbone.Model(<%= raw(ApplicationDecorator.new(@app).to_json) %>);
     (indexView = new c.v.EventsIndexView({el: '#events'})).render();
 
     events = indexView.collection;

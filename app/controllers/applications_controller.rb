@@ -16,6 +16,6 @@ class ApplicationsController < ApplicationController
   end
 
   def show
-    @item = user.applications.find(params[:id])
+    params[:application_id] = params.delete(:id)
   end
 end

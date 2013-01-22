@@ -19,6 +19,10 @@ module Decorator
     end
 
     class << self
+      def many(*items)
+        items.to_a.flatten.collect {|item| new(item) }
+      end
+
       def allow(*keys)
         self._allowed = self.get_allowed_keys | keys.to_a.flatten.map(&:to_s)
       end

@@ -24,8 +24,8 @@ class ApplicationController < ActionController::Base
     true
   end
 
-  def load_application
-    @app = user.applications.find(params[:application_id])
+  def application
+    @application ||= user.applications.find(params[:application_id])
   end
 
   def render_error
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  helper_method :user, :user?, :load_application
+  helper_method :user, :user?, :application
 
   private
 

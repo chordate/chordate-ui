@@ -3,6 +3,7 @@ ChordateUi::Application.routes.draw do
   resources :sessions, :only => [:new, :create]
 
   resources :applications do
+    resources :users, :only => [:index]
     resources :events, :only => [:index]
     resources :filters, :only => [:index]
   end

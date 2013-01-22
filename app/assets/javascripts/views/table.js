@@ -45,7 +45,7 @@ c.v.TableView = (function() {
 
       var options = _({page: that.page}).extend(filters);
 
-      that.$(".spinner").removeClass("hidden");
+      that.showSpinner();
 
       $.get(that.target(), options).
         success(function(data) {

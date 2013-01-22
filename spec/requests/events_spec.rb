@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "events", :js => true do
+describe :events, :js => true do
   let(:user) { User.first }
   let(:application) { Application.first }
 

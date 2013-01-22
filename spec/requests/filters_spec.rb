@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "filters", :js => true do
+describe :filters, :js => true do
   let(:user) { User.first }
   let(:application) { Application.first }
 

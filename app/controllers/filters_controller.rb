@@ -1,6 +1,4 @@
 class FiltersController < ApplicationController
-  before_filter :load_application
-
   def index
     if filters.valid?
       render :json => filters
@@ -12,6 +10,6 @@ class FiltersController < ApplicationController
   private
 
   def filters
-    @filters ||= ApplicationEventsFilterDecorator.new(@app, params.slice(:model, :type))
+    @filters ||= ApplicationEventsFilterDecorator.new(application, params.slice(:model, :type))
   end
 end
