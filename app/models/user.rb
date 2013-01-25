@@ -10,10 +10,12 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
 
   before_create :generate_password
-  before_create -> { self.account = Account.create }, :unless => -> { account.present? }
+  before_create :create_account, :unless => -> { account.present? }
   before_create -> { self.token = generate_token }
 
   before_update :generate_password, :if => -> { password_changed? }
+
+  after_create -> { account.users << self }, :unless => -> { account.users.exists?(id) }
 
   def valid_password?(other)
     digest(:other => other) == password
@@ -28,6 +30,11 @@ class User < ActiveRecord::Base
   def generate_password
     self.salt = Time.now.to_i
     self.password = digest
+  end
+
+  def create_account
+    self.account = Account.create
+    self.admin = true
   end
 
   def generate_token

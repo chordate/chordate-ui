@@ -49,6 +49,48 @@ describe User do
 
         subject.token.should == "my secure random"
       end
+
+      it "should add itself to the account" do
+        subject.save!
+
+        subject.account.users.should include(subject)
+      end
+
+      describe "when the user has no account" do
+        before do
+          subject.account = nil
+        end
+
+        it "should be an admin" do
+          subject.tap(&:save!).reload
+
+          should be_admin
+        end
+
+        it "should create and account" do
+          expect {
+            subject.save
+          }.to change(Account, :count).by(1)
+        end
+
+        it "should store the account" do
+          subject.tap(&:save!).reload
+
+          subject.account.should == Account.last
+        end
+      end
+
+      describe "when the user has account" do
+        before do
+          subject.account = Account.first
+        end
+
+        it "should not be an admin" do
+          subject.tap(&:save!).reload
+
+          should_not be_admin
+        end
+      end
     end
 
     describe "passwords" do
@@ -75,7 +117,7 @@ describe User do
   describe "#valid_password?" do
     let(:password) { "the password" }
 
-    subject { FactoryGirl.create(:user, :password => password) }
+    subject { User.first.tap {|u| u.update_attributes(:password => password)} }
 
     it "should not be valid (value)" do
       should_not be_valid_password("some password")
