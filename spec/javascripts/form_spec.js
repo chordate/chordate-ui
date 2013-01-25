@@ -11,6 +11,10 @@ describe("FormView", function () {
     expect(view.type).toEqual("FormView");
   });
 
+  it("should POST", function () {
+    expect(view.xhr).toEqual("post");
+  });
+
   it("should have errors", function () {
     expect(view.errors).toEqual([]);
   });
@@ -66,6 +70,26 @@ describe("FormView", function () {
 
     it("should send the fields", function () {
       expect(request.params).toMatch(/email\=john%40example\.com/);
+    });
+
+    describe("when updating", function () {
+      beforeEach(function () {
+        clearAjaxRequests();
+
+        view.xhr = "put";
+
+        view.submit(event);
+        request = mostRecentAjaxRequest();
+      });
+
+      it("should PUT to #endpoint", function () {
+        expect(request.method).toEqual("PUT");
+        expect(request.url).toMatch(/^\/the_endpoint_to_submit_to/);
+      });
+
+      it("should send the fields", function () {
+        expect(request.params).toMatch(/email\=john%40example\.com/);
+      });
     });
 
     describe("on success", function () {

@@ -9,7 +9,7 @@
 <body>
 
 <script type='text/javascript'>
-  currentUser = <%= raw(user ? UserDecorator.new(user).to_json : {}) %>;
+  c.data.user = new Backbone.Model(<%= raw(user? ? UserDecorator.new(user).to_json : {}) %>);
 </script>
 
 <%= yield %>

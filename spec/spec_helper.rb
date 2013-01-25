@@ -22,6 +22,8 @@ Capybara.javascript_driver = (%w(t true y yes).include?(ENV['POLTERGEIST']) ? :p
 RSpec.configure do |config|
   config.mock_with :rspec
 
+  config.order = "rand:602"
+
   config.formatter = :nested if ENV['NESTED_RSPEC'] == 1
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -31,14 +33,20 @@ RSpec.configure do |config|
   config.include ControllerHelper, :type => :controller
   config.include RequestHelper, :type => :request
 
-  config.before(:each) do
+  config.before(:all) do
     Hat.redis {|r| r.flushdb }
+
     WebMock.disable_net_connect!(:allow_localhost => true)
   end
 
   config.after(:each) do
-    WebMock.allow_net_connect!
     Timecop.return
+
+    Hat.redis {|r| r.flushdb }
+  end
+
+  config.after(:all) do
+    WebMock.allow_net_connect!
   end
 end
 

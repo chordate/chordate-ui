@@ -15,6 +15,31 @@ class ApplicationController < ActionController::Base
     user.present?
   end
 
+  def account
+    @account ||= begin
+      (user? && user.account ||
+        application? && application.account).tap_if(:present?) do |account|
+          params[:account] = account
+      end
+    end
+  end
+
+  def account?
+    account.present?
+  end
+
+  def application
+    @application ||= begin
+      if (app_id = params[:application_id].presence)
+        params[:application] = (user? ? user.applications : Application).find(app_id)
+      end
+    end
+  end
+
+  def application?
+    application.present?
+  end
+
   def set_cookie
     cookies.signed[:token] = {
       :value => @item.token,
@@ -24,17 +49,13 @@ class ApplicationController < ActionController::Base
     true
   end
 
-  def application
-    @application ||= user.applications.find(params[:application_id])
-  end
-
   def render_error
     if params[:action] == "create"
       render :json => {:errors => @item.errors.full_messages}, :status => :unprocessable_entity
     end
   end
 
-  helper_method :user, :user?, :application
+  helper_method :user, :user?, :account, :account?, :application, :application?
 
   private
 

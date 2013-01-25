@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "sessions" do
+describe :sessions do
   it "should route GET /sessions/new" do
     {:get => "/sessions/new"}.should be_routable
   end

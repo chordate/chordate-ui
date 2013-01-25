@@ -3,6 +3,7 @@ c.v.FormView = (function() {
 
   return Backbone.View.extend({
     type: "FormView",
+    xhr: "post",
 
     events: function() {
       var events = (this.formEvents || {});
@@ -15,7 +16,7 @@ c.v.FormView = (function() {
 
     initialize: function() {
       this.errors = [];
-      this.model = new Backbone.Model();
+      this.model = (this.model || new Backbone.Model());
     },
 
     render: function() {
@@ -40,12 +41,11 @@ c.v.FormView = (function() {
     submit: function(e) {
       var that = this;
 
-      e.stopPropagation();
-      e.preventDefault();
+      that.stopPropagation(e);
 
       that.update();
 
-      $.post(that.target(), that.model.attributes).
+      $.ajax({url: that.target(), data: that.model.attributes, type: that.xhr}).
         success(function(data) {
           that.undelegateEvents();
 
@@ -60,6 +60,11 @@ c.v.FormView = (function() {
 
           that.error && that.error(r);
         });
+    },
+
+    stopPropagation: function(e) {
+      e.stopPropagation();
+      e.preventDefault();
     }
   });
 }());

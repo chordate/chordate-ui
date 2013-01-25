@@ -3,8 +3,13 @@
     <div>
       <h2 class='title'>{{title}}</h2>
     </div>
+    {{#if new}}
+      <div>
+        {{include new}}
+      </div>
+    {{/if }}
     <div>
-      <div class='spinner'></div>
+      <div class='spinner table'></div>
       <div>
         <table>
           <thead>

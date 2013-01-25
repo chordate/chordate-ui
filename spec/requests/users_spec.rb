@@ -6,9 +6,9 @@ describe :users do
 
     click_link I18n.t("sessions.new.not_registered")
 
-    fill_in I18n.t("users.new.name"), :with => "John Doe (a new user)"
-    fill_in I18n.t("users.new.email"), :with => "john-a-new-user@example.com"
-    fill_in I18n.t("users.new.password"), :with => "password"
+    fill_in I18n.t("common.name"), :with => "John Doe (a new user)"
+    fill_in I18n.t("common.email"), :with => "john-a-new-user@example.com"
+    fill_in I18n.t("common.password"), :with => "password"
 
     click_button I18n.t("buttons.submit")
 
@@ -27,10 +27,10 @@ describe :users do
 
     visit new_session_path
 
-    fill_in I18n.t("sessions.new.email"), :with => user.email
-    fill_in I18n.t("sessions.new.password"), :with => "a password"
+    fill_in I18n.t("common.email"), :with => user.email
+    fill_in I18n.t("common.password"), :with => "a password"
 
-    click_button I18n.t("buttons.submit")
+    click_button I18n.t("buttons.login")
 
     wait_until(2) { current_path == dashboard_path }
 

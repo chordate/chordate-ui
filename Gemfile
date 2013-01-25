@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'i18n-js', :github => 'fnando/i18n-js'
 gem 'capistrano'
 gem 'connection_pool'
+gem 'tap-if'
 
 group :development, :test do
   gem 'rspec'
@@ -24,6 +25,7 @@ group :test do
   gem 'connection_pool'
   gem 'webmock'
   gem 'timecop'
+  gem 'fuubar'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
 end

@@ -25,7 +25,7 @@ c.v.TableView = (function() {
     },
 
     render: function() {
-      var attrs = _(this).pick("paginate", "title", "headers", "page", "row"),
+      var attrs = _(this).pick("paginate", "title", "headers", "page", "row", "new"),
           context = _({
             collection: this.collection.models,
             next: attrs.page + 1
@@ -59,6 +59,11 @@ c.v.TableView = (function() {
 
           that.hideSpinner();
         });
+    },
+
+    stopPropagation: function(e) {
+      e.stopPropagation();
+      e.preventDefault();
     },
 
     showSpinner: function() {

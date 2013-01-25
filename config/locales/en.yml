@@ -7,26 +7,33 @@ en:
       human: "%b %-d, %Y @ %-I:%M:%S %p"
   time:
     <<: *date
-  sessions:
-    new:
-      not_registered: "Not yet Registered?"
-      email: "Email"
-      password: "Password"
-      error: "That email and password combination didn't work. :("
-  users:
-    new:
-      name: "Name"
-      email: "Email"
-      password: "Password"
   buttons:
     submit: "Submit"
     create: "Create"
-  applications:
+    login: Log In
+    send: "Send"
+    invite: "Invite"
+  common:
+    name: "Name"
+    email: "Email"
+    password: "Password"
+  sessions:
     new:
-      name: "Name"
+      not_registered: "Not yet Registered?"
+      error: "That email and password combination didn't work. :("
+  applications:
     index:
       title: "Applications"
       go_to_app: "Go to app"
+    show:
+      invite_users: "Invite Users"
   events:
     index:
       title: "Events"
+  invites:
+    new:
+      success: "Invite sent!"
+  invite:
+    mailer:
+      invited:
+        subject: "You've been invited"

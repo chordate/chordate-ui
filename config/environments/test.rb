@@ -13,5 +13,10 @@ ChordateUi::Application.configure do
   config.action_controller.allow_forgery_protection = false
 
   config.action_mailer.delivery_method = :test
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+
   config.active_support.deprecation = :stderr
+
+  config.action_mailer.default_url_options = { :host => "localhost:9292" }
 end

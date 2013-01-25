@@ -5,9 +5,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @item = User.new(params.slice(:name, :email, :password))
-
-    if (decorator = UserDecorator.new(@item)).save
+    if decorator.save
       set_cookie && (render :json => decorator, :status => :created)
     else
       render_error
@@ -16,5 +14,15 @@ class UsersController < ApplicationController
 
   def index
     render :json => UserDecorator.many(application.users.order("application_users.created_at"))
+  end
+
+  private
+
+  def decorator
+    @decorator ||= begin
+      UserDecorator.new(
+        @item = User.new(params.slice(:name, :email, :password))
+      )
+    end
   end
 end

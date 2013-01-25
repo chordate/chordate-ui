@@ -10,14 +10,12 @@ class Application < ActiveRecord::Base
   has_many :application_users
   has_many :users, :through => :application_users
 
-  before_validation :on => :create, :unless => lambda { account.present? } do
-    self.account = user.account
-  end
+  before_validation -> { self.account = user.account }, :on => :create, :unless => -> { account.present? }
 
   validates :name, :user, :presence => true
 
-  before_create lambda { self.token = generate_token }
-  after_create  lambda { self.users << user }
+  before_create -> { self.token = generate_token }
+  after_create  -> { self.users << user }
 
   private
 

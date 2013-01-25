@@ -8,7 +8,7 @@ describe :applications, :js => true do
   end
 
   it "creates a new app" do
-    fill_in I18n.t("applications.new.name"), :with => "App Name 1"
+    fill_in I18n.t("common.name"), :with => "App Name 1"
 
     click_button I18n.t("buttons.create")
 

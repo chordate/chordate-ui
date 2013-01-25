@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118041526) do
+ActiveRecord::Schema.define(:version => 20130122224643) do
 
   create_table "accounts", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -57,14 +57,24 @@ ActiveRecord::Schema.define(:version => 20130118041526) do
   add_index "events", ["generated_at"], :name => "index_events_on_generated_at"
   add_index "events", ["klass"], :name => "index_events_on_klass"
 
+  create_table "invites", :force => true do |t|
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "user_id"
+    t.integer  "application_id"
+    t.string   "email"
+    t.string   "token"
+    t.datetime "shown"
+  end
+
   create_table "users", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "name"
     t.string   "email"
+    t.string   "token"
     t.string   "password"
     t.integer  "salt"
-    t.string   "token"
     t.integer  "account_id"
   end
 

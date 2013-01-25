@@ -5,5 +5,5 @@
 <script type='text/javascript'>
   c.data.application = new Backbone.Model(<%= raw(ApplicationDecorator.new(application).to_json) %>);
 
-  (new c.v.UserListView({el: "#users"})).render();
+  (new c.v.UsersListView({el: "#users"})).render();
 </script>

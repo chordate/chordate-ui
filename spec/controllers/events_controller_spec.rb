@@ -51,7 +51,6 @@ describe EventsController do
           ].to_json
         end
 
-
         describe "when there are events from other applications" do
           before do
             @events.push(FactoryGirl.create(:event, :application => FactoryGirl.create(:application)))
@@ -120,8 +119,8 @@ describe EventsController do
           make_request
 
           response.body.should == [
-              EventDecorator.new(@events.last),
-              EventDecorator.new(@other_event)
+            EventDecorator.new(@events.last),
+            EventDecorator.new(@other_event)
           ].to_json
         end
       end

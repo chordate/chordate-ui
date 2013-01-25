@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
 
   validates :env, :generated_at, :klass, :message, :application, :presence => true
 
-  after_create lambda {
+  after_create -> {
     key, value = "applications:#{application_id}:events", "#{generated_at.to_i}:#{id}"
 
     Hat.pipelined {|r|

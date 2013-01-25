@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "users" do
+describe :users do
   it "should route GET /users/new" do
     {:get => "/users/new"}.should be_routable
   end

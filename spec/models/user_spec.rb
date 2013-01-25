@@ -6,17 +6,7 @@ describe User do
   it { should have_many(:applications).through(:application_users) }
 
   describe "validations" do
-    let(:account) { Account.first }
     subject { FactoryGirl.build(:user) }
-
-    xit "should require an account" do
-      subject.account = nil
-      should_not be_valid
-      should have(1).error_on(:account)
-
-      subject.account = account
-      should be_valid
-    end
 
     it "should require a name" do
       subject.name = nil

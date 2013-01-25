@@ -10,9 +10,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
 
   before_create :generate_password
-  before_create lambda { self.token = generate_token }
+  before_create -> { self.account = Account.create }, :unless => -> { account.present? }
+  before_create -> { self.token = generate_token }
 
-  before_update :generate_password, :if => lambda { password_changed? }
+  before_update :generate_password, :if => -> { password_changed? }
 
   def valid_password?(other)
     digest(:other => other) == password

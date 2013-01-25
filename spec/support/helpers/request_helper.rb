@@ -14,10 +14,10 @@ module RequestHelper
   def sign_in(user, options = {})
     visit new_session_path
 
-    fill_in I18n.t("sessions.new.email"), :with => user.email
-    fill_in I18n.t("sessions.new.password"), :with => "password"
+    fill_in I18n.t("common.email"), :with => user.email
+    fill_in I18n.t("common.password"), :with => "password"
 
-    click_button I18n.t("buttons.submit")
+    click_button I18n.t("buttons.login")
 
     expect_path dashboard_path
     visit (options[:to] || dashboard_path)

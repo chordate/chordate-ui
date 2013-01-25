@@ -1,0 +1,10 @@
+<div>
+  <div id='invite'></div>
+</div>
+
+<script type='text/javascript'>
+  c.data.application = new Backbone.Model(<%= raw(ApplicationDecorator.new(application).to_json) %>);
+  c.data.invite = new Backbone.Model(<%= raw(@invite.to_json) %>);
+
+  (new c.v.InviteShowView({el: '#invite', model: c.data.invite})).render()
+</script>

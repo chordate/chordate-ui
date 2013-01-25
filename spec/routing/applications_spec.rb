@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "applications" do
+describe :applications do
   it "should route GET /applications/new" do
     {:get => "/applications/new"}.should be_routable
   end

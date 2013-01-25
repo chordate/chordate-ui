@@ -1,0 +1,3 @@
+<p>You have been invited to join <%= @invite.application.name %> by <%= @invite.user.name %>.</p>
+
+<p>Click <%= link_to("this link", application_invite_url(@invite.application, @invite) + "?token=" + @invite.token) %> to join the app.</p>
