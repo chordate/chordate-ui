@@ -41,6 +41,17 @@ describe Event do
       subject.application = Application.first
       should be_valid
     end
+
+    [:open, :resolved].each do |status|
+      it "should allow #{status} for status" do
+        subject.status = "invalid-status"
+        should_not be_valid
+        should have(1).error_on(:status)
+
+        subject.status = status.to_s
+        should be_valid
+      end
+    end
   end
 
   describe "#save" do
@@ -90,6 +101,30 @@ describe Event do
 
         hget_env(subject.klass).should == key
       end
+    end
+  end
+
+  describe "#resolved?" do
+    it { should_not be_resolved }
+
+    describe "when the status is resolved" do
+      before do
+        subject.status = "resolved"
+      end
+
+      it { should be_resolved }
+    end
+  end
+
+  describe "#flagged?" do
+    it { should_not be_flagged }
+
+    describe "when flagged" do
+      before do
+        subject.flagged = true
+      end
+
+      it { should be_flagged }
     end
   end
 end

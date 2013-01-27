@@ -3,7 +3,7 @@ class FiltersController < ApplicationController
     if filters.valid?
       render :json => filters
     else
-      head :unprocessable_entity
+      head 422
     end
   end
 

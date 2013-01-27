@@ -11,9 +11,11 @@ ChordateUi::Application.routes.draw do
 
   namespace :v1, :module => :api do
     resources :applications, :only => [] do
-      resources :events, :only => [:create]
+      resources :events, :only => [:create, :update]
     end
   end
+
+  get '/v1/applications/:application_id/events', :to => 'events#index'
 
   get '/dashboard' => 'dashboards#index'
 

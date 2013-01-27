@@ -11,9 +11,15 @@ class ApiController < ApplicationController
 
   def application
     @application ||= begin
-      Application.where(
-        params.slice(:token).merge(:id => params[:application_id])
-      ).first
+      if params[:action] == "create"
+        Application.where(
+          params.slice(:token).merge(:id => params[:application_id])
+        ).first
+      elsif params[:action] == "update"
+        @user = User.where(params.slice(:token)).first
+
+        @user && @user.applications.where(:id => params[:application_id]).first
+      end
     end
   end
 end

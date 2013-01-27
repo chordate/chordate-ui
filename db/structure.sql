@@ -160,7 +160,9 @@ CREATE TABLE events (
     "user" hstore,
     server hstore,
     extra hstore,
-    backtrace character varying[]
+    backtrace character varying[],
+    flagged boolean DEFAULT false,
+    status character varying(255) DEFAULT 'open'::character varying
 );
 
 
@@ -437,3 +439,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130126005344');
 INSERT INTO schema_migrations (version) VALUES ('20130126010318');
 
 INSERT INTO schema_migrations (version) VALUES ('20130126010410');
+
+INSERT INTO schema_migrations (version) VALUES ('20130127182542');

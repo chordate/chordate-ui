@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
 
   def render_error
     if params[:action] == "create"
-      render :json => {:errors => @item.errors.full_messages}, :status => :unprocessable_entity
+      render :json => {:errors => @item.errors.full_messages}, :status => 422
     end
   end
 

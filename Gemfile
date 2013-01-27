@@ -5,8 +5,6 @@ gem 'puma'
 gem 'pg'
 gem 'activerecord-postgres-hstore'
 gem 'activerecord-postgres-array'
-gem 'libv8'
-gem 'therubyracer'
 gem 'redis'
 gem 'jquery-rails'
 gem 'i18n-js', :github => 'fnando/i18n-js'
@@ -35,6 +33,5 @@ end
 
 group :assets do
   gem 'handlebars_assets', :github => 'leshill/handlebars_assets'
-  gem 'less-rails', :github => 'metaskills/less-rails'
   gem 'uglifier'
 end

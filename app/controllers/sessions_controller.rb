@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if @item.login
       set_cookie && (render :json => {}, :status => :created)
     else
-      render :json => {:errors => I18n.t("sessions.new.error")}, :status => :unprocessable_entity
+      render :json => {:errors => I18n.t("sessions.new.error")}, :status => 422
     end
   end
 end

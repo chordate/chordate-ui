@@ -24,7 +24,7 @@ class InvitesController < ApplicationController
     if invite.created?
       set_cookie && (render :json => invite)
     else
-      head :unprocessable_entity
+      head 422
     end
   end
 

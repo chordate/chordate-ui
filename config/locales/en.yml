@@ -30,6 +30,8 @@ en:
   events:
     index:
       title: "Events"
+    status:
+      inclusion: "should be either 'open' or 'resolved'"
   invites:
     new:
       success: "Invite sent!"

@@ -129,4 +129,97 @@ describe Api::EventsController do
       end
     end
   end
+
+  describe "#update" do
+    let(:user) { User.first }
+    let(:options) { { :token => user.token } }
+
+    let(:event) { FactoryGirl.create(:event, :application => application) }
+
+    describe ".json" do
+      subject { event.reload }
+
+      def make_request
+        xhr :put, :update, { :format => "json", :application_id => application.id, :id => event.id }.merge(options)
+      end
+
+      it "should be successful" do
+        make_request
+
+        response.should be_success
+      end
+
+      it "should return the event" do
+        make_request
+
+        response.body.should == EventDecorator.new(subject).to_json
+      end
+
+      describe "when changing the status" do
+        before do
+          options[:status] = "resolved"
+        end
+
+        it "should update the event" do
+          make_request
+
+          should be_resolved
+        end
+
+        describe "when the status cannot be updated" do
+          before do
+            options[:status] = "invalid-status"
+          end
+
+          it "should be a 422" do
+            make_request
+
+            response.code.should == "422"
+          end
+
+          it "should not update the event" do
+            make_request
+
+            subject.status.should == "open"
+          end
+
+          it "should return an error" do
+            make_request
+
+            response.body.should == Api::ErrorDecorator.new(422, ["Status " + I18n.t("events.status.inclusion")]).to_json
+          end
+        end
+      end
+
+      describe "when flagging the event" do
+        before do
+          options[:flagged] = true
+        end
+
+        it "should flag the event" do
+          make_request
+
+          should be_flagged
+        end
+
+        describe "when the flag is another type of param" do
+          before do
+            options[:flagged] = "t"
+          end
+
+          it "should be successful" do
+            make_request
+
+            response.should be_success
+          end
+
+          it "should flag the event" do
+            make_request
+
+            should be_flagged
+          end
+        end
+      end
+    end
+  end
 end
