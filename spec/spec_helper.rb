@@ -16,6 +16,7 @@ silence_warnings do
 end
 
 load Rails.root.join("db", "seeds.rb")
+Hat.redis {|r| r.flushdb }
 
 Capybara.javascript_driver = (%w(t true y yes).include?(ENV['POLTERGEIST']) ? :poltergeist : :selenium)
 
@@ -34,15 +35,12 @@ RSpec.configure do |config|
   config.include RequestHelper, :type => :request
 
   config.before(:all) do
-    Hat.redis {|r| r.flushdb }
-
     WebMock.disable_net_connect!(:allow_localhost => true)
   end
 
   config.after(:each) do
-    Timecop.return
-
     Hat.redis {|r| r.flushdb }
+    Timecop.return
   end
 
   config.after(:all) do

@@ -56,6 +56,11 @@ GEM
       activesupport (= 3.2.11)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
+    activerecord-postgres-array (0.0.8)
+      activerecord
+    activerecord-postgres-hstore (0.5.3)
+      rails
+      rake
     activeresource (3.2.11)
       activemodel (= 3.2.11)
       activesupport (= 3.2.11)
@@ -230,6 +235,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-postgres-array
+  activerecord-postgres-hstore
   capistrano
   capybara (~> 1.1.0)
   connection_pool
