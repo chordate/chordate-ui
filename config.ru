@@ -2,3 +2,6 @@
 
 require ::File.expand_path('../config/environment',  __FILE__)
 run ChordateUi::Application
+
+require 'typhoeus/railtie'
+use Rack::Typhoeus::Middleware::ParamsDecoder

@@ -1,6 +1,6 @@
 c.v.UsersNewView = (function(){
   return c.v.FormView.extend({
-    template: "_users_new",
+    template: "users/_new",
     fields: ["name", "email", "password"],
 
     target: function() {

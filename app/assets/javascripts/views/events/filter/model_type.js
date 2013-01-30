@@ -3,7 +3,7 @@ c.v.EventsFilterModelTypeView = (function() {
     title: "Offending Model",
     headers: [""],
     paginate: false,
-    row: "_events_filter_model_type_row",
+    row: "events/filter/_model_type_row",
 
     target: function() {
       return "/applications/" + c.data.application.id + "/filters.json?model=event&type=model_type"

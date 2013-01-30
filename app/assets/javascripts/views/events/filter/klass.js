@@ -3,7 +3,7 @@ c.v.EventsFilterKlassView = (function() {
     title: "Error Class",
     headers: [""],
     paginate: false,
-    row: "_events_filter_klass_row",
+    row: "events/filter/_klass_row",
 
     target: function() {
       return "/applications/" + c.data.application.id + "/filters.json?model=event&type=klass"

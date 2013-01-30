@@ -29,11 +29,11 @@ describe("UsersListView", function () {
   });
 
   it("should have the row view", function () {
-    expect(view.row).toEqual("_users_list_row")
+    expect(view.row).toEqual("users/_list_row")
   });
 
   it("should have the new view", function () {
-    expect(view.new).toEqual("_users_list_new")
+    expect(view.new).toEqual("users/_list_new")
   });
 
   it("should not paginate", function () {

@@ -23,7 +23,7 @@ Capybara.javascript_driver = (%w(t true y yes).include?(ENV['POLTERGEIST']) ? :p
 RSpec.configure do |config|
   config.mock_with :rspec
 
-  config.order = "rand:605"
+  config.order = "random"
 
   config.formatter = :nested if ENV['NESTED_RSPEC'] == 1
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

@@ -47,7 +47,7 @@ describe("EventsFilterKlassView", function () {
   });
 
   it("should have the row", function () {
-    expect(view.row).toEqual("_events_filter_klass_row")
+    expect(view.row).toEqual("events/filter/_klass_row")
   });
 
   it("should get the target", function () {

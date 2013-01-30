@@ -7,16 +7,19 @@ gem 'activerecord-postgres-hstore'
 gem 'activerecord-postgres-array'
 gem 'redis'
 gem 'jquery-rails'
-gem 'i18n-js', :github => 'fnando/i18n-js'
+gem 'i18n-js', :git => 'https://github.com/fnando/i18n-js'
 gem 'stripe'
 gem 'capistrano'
 gem 'connection_pool'
 gem 'tap-if'
+gem 'typhoeus', :git => 'https://github.com/typhoeus/typhoeus'
+
+# gem 'chordate-ruby', :path => '~/git/chordate-ruby'
 
 group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'jasmine', :github => "pivotal/jasmine-gem"
+  gem 'jasmine', :git => 'https://github.com/pivotal/jasmine-gem'
 end
 
 group :test do
@@ -32,6 +35,6 @@ group :test do
 end
 
 group :assets do
-  gem 'handlebars_assets', :github => 'leshill/handlebars_assets'
+  gem 'handlebars_assets', :git => 'https://github.com/leshill/handlebars_assets'
   gem 'uglifier'
 end

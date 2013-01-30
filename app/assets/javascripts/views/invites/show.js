@@ -1,6 +1,6 @@
 c.v.InviteShowView = (function() {
   return c.v.FormView.extend({
-    template: "_invites_show",
+    template: "invites/_show",
     fields: ["name", "password"],
     xhr: "put",
 

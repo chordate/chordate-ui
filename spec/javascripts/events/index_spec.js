@@ -25,7 +25,7 @@ describe("EventsIndexView", function () {
   });
 
   it("should have the row", function () {
-    expect(view.row).toEqual("_events_row")
+    expect(view.row).toEqual("events/_row")
   });
 
   it("should get the target", function () {

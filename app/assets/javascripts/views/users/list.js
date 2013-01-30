@@ -2,8 +2,8 @@ c.v.UsersListView = (function() {
   return c.v.TableView.extend({
     title: "Users",
     headers: ["Name", "Email"],
-    row: "_users_list_row",
-    new: "_users_list_new",
+    row: "users/_list_row",
+    new: "users/_list_new",
     paginate: false,
 
     target: function(options) {

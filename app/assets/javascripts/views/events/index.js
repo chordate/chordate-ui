@@ -2,7 +2,7 @@ c.v.EventsIndexView = (function() {
   return c.v.TableView.extend({
     title: "Events",
     headers: ["Event", "Last Occurrence", "Count", "Severity"],
-    row: "_events_row",
+    row: "events/_row",
 
     target: function() {
       return "/applications/" + c.data.application.id + "/events.json"

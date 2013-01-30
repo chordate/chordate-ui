@@ -22,7 +22,7 @@ describe :applications, :js => true do
 
     within "#application_#{app.id}" do
       page.should have_content(app.name)
-      page.should have_content(app.token)
+      page.should have_content(app.id.to_s + ":" + app.token)
     end
   end
 

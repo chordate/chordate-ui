@@ -1,6 +1,6 @@
 c.v.SessionsNewView = (function() {
   return c.v.FormView.extend({
-    template: "_sessions_new",
+    template: "sessions/_new",
     fields: ["email", "password"],
 
     target: function() {
